@@ -141,7 +141,8 @@ if polynomial_option == 1 or polynomial_option == 2:
   Sc = 1.0
   CFL = 0.5
   #dt = float(CFL*minLengthMesh)
-  dt = 0.1   #linear ok 
+  dt = 0.1   #SL 
+  #dt = 0.005   #TG
 
 
  
@@ -722,9 +723,9 @@ for t in tqdm(range(1, nt)):
  
  
   # ------------------------ CHECK STEADY STATE ----------------------------------
-  if np.all(vx == vx_old) and np.all(vy == vy_old):
-   end_type = 1
-   break
+  #if np.all(vx == vx_old) and np.all(vy == vy_old):
+  # end_type = 1
+  # break
   # ---------------------------------------------------------------------------------
  
   # ------------------------ CHECK CONVERGENCE RESULT ----------------------------------
