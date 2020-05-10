@@ -74,8 +74,8 @@ class linearCavity:
 
    # Moving Wall
    elif line == 3:
-    _self.aux1BC[v1] = wallVelocity
-    _self.aux1BC[v2] = wallVelocity
+    _self.aux1BC[v1] = _self.wallVelocity
+    _self.aux1BC[v2] = _self.wallVelocity
 
     _self.dirichletNodes.append(v1)
     _self.dirichletNodes.append(v2)
