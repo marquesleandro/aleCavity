@@ -16,26 +16,26 @@ import scipy.sparse.linalg
 
 
 
-class linearPoiseuille:
+class linearCavity:
 
  # ------------------------------------------------------------------------------------------------------
  # Use:
 
  # # Applying vx condition
- # condition_xvelocity = bc_apply.Half_Poiseuille(mesh.nphysical,mesh.npoints,mesh.x,mesh.y)
+ # condition_xvelocity = bc_apply.Half_Cavity(mesh.nphysical,mesh.npoints,mesh.x,mesh.y)
  # condition_xvelocity.neumann_condition(mesh.neumann_edges[1])
  # condition_xvelocity.dirichlet_condition(mesh.dirichlet_pts[1])
  # condition_xvelocity.gaussian_elimination(LHS_vx0,mesh.neighbors_nodes)
  # vorticity_ibc = condition_xvelocity.ibc
 
  # # Applying vy condition
- # condition_yvelocity = bc_apply.Half_Poiseuille(mesh.nphysical,mesh.npoints,mesh.x,mesh.y)
+ # condition_yvelocity = bc_apply.Half_Cavity(mesh.nphysical,mesh.npoints,mesh.x,mesh.y)
  # condition_yvelocity.neumann_condition(mesh.neumann_edges[2])
  # condition_yvelocity.dirichlet_condition(mesh.dirichlet_pts[2])
  # condition_yvelocity.gaussian_elimination(LHS_vy0,mesh.neighbors_nodes)
 
  # # Applying psi condition
- # condition_streamfunction = bc_apply.Half_Poiseuille(mesh.nphysical,mesh.npoints,mesh.x,mesh.y)
+ # condition_streamfunction = bc_apply.Half_Cavity(mesh.nphysical,mesh.npoints,mesh.x,mesh.y)
  # condition_streamfunction.streamfunction_condition(mesh.dirichlet_pts[3],LHS_psi0,mesh.neighbors_nodes)
  # ------------------------------------------------------------------------------------------------------
 
@@ -45,9 +45,8 @@ class linearPoiseuille:
   _self.numNodes = _numNodes
   _self.x = _x
   _self.y = _y
-  _self.maxVx = 3.0/2.0
-  _self.L = 1.0
-  _self.benchmark_problem = 'linear Poiseuille'
+  _self.wallVelocity = 1.0
+  _self.benchmark_problem = 'linear Cavity'
 
 
  def xVelocityCondition(_self, _boundaryEdges, _LHS0, _neighborsNodes):
@@ -66,17 +65,17 @@ class linearPoiseuille:
    v2 = _self.boundaryEdges[i][2] - 1
 
    # Noslip 
-   if line == 1 or line == 4:
+   if line == 1 or line == 2 or line == 4:
     _self.aux1BC[v1] = 0.0
     _self.aux1BC[v2] = 0.0
  
     _self.dirichletNodes.append(v1)
     _self.dirichletNodes.append(v2)
 
-   # Inflow
+   # Moving Wall
    elif line == 3:
-    _self.aux1BC[v1] = (4.0*_self.maxVx)*(_self.y[v1]/_self.L**2)*(_self.L - _self.y[v1])
-    _self.aux1BC[v2] = (4.0*_self.maxVx)*(_self.y[v2]/_self.L**2)*(_self.L - _self.y[v2])
+    _self.aux1BC[v1] = wallVelocity
+    _self.aux1BC[v2] = wallVelocity
 
     _self.dirichletNodes.append(v1)
     _self.dirichletNodes.append(v2)
@@ -114,14 +113,14 @@ class linearPoiseuille:
    v2 = _self.boundaryEdges[i][2] - 1
 
    # Noslip 
-   if line == 1 or line == 4:
+   if line == 1 or line == 2 or line == 4:
     _self.aux1BC[v1] = 0.0
     _self.aux1BC[v2] = 0.0
  
     _self.dirichletNodes.append(v1)
     _self.dirichletNodes.append(v2)
 
-   # Inflow
+   # Moving Wall
    elif line == 3:
     _self.aux1BC[v1] = 0.0
     _self.aux1BC[v2] = 0.0
@@ -160,25 +159,36 @@ class linearPoiseuille:
    v1 = _self.boundaryEdges[i][1] - 1
    v2 = _self.boundaryEdges[i][2] - 1
 
-   # Symmetric axis (Bottom Line)
+   # Bottom Line
    # psi_bottom can be any value. Because, important is psi_top - psi_bottom.
    # In this case, psi_bottom is zero
-   if line == 4:
+   if line == 1:
     _self.aux1BC[v1] = 0.0
     _self.aux1BC[v2] = 0.0
  
     _self.dirichletNodes.append(v1)
     _self.dirichletNodes.append(v2)
 
-   # Noslip (Top Line)
-   # Ref: Batchelor 1967 pag. 78 eq. 2.2.12
-   # As psi_bottom is zero, so psi_top is:
-   elif line == 1:
-    _self.aux1BC[v1] = (_self.maxVx*(2.0/3.0))*(_self.L)
-    _self.aux1BC[v2] = (_self.maxVx*(2.0/3.0))*(_self.L)
+   # Top Line
+   # Ref: Batchelor 1967 pag. 76 eq. 2.2.8
+   # psi_top is also zero, because the volume mass flux is null
+   elif line == 3:
+    _self.aux1BC[v1] = 0.0
+    _self.aux1BC[v2] = 0.0
 
     _self.dirichletNodes.append(v1)
     _self.dirichletNodes.append(v2)
+
+
+   # Right and Left lines
+   # psi is also zero, because the volume mass flux is null
+   elif line == 2 or line == 4:
+    _self.aux1BC[v1] = 0.0
+    _self.aux1BC[v2] = 0.0
+
+    _self.dirichletNodes.append(v1)
+    _self.dirichletNodes.append(v2)
+
 
   _self.dirichletNodes = np.unique(_self.dirichletNodes)
 
