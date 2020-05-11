@@ -77,6 +77,10 @@ print ' ------------------------------------------------------------------------
 print ' (1) - Taylor Galerkin Scheme'
 print ' (2) - Semi Lagrangian Scheme'
 scheme_option = int(raw_input("\n Enter simulation scheme option above: "))
+if scheme_option == 1:
+ scheme_name = 'Taylor Galerkin'
+elif scheme_option == 2:
+ scheme_name = 'Semi Lagrangian'
 print' ----------------------------------------------------------------------------\n'
 
 
@@ -345,7 +349,7 @@ print ' PARAMETERS OF THE SIMULATION:'
 print ' -----------------------------'
 
 print ' Benchmark Problem: %s' %benchmark_problem
-print ' Scheme: %s' %str(scheme_option)
+print ' Scheme: %s' %str(scheme_name)
 print ' Element Type: %s' %str(polynomial_order)
 print ' Gaussian Quadrature (Gauss Points): %s' %str(gausspoints)
 print ' Mesh: %s' %mshFileName
@@ -417,7 +421,7 @@ for t in tqdm(range(1, nt)):
   print ' -----------------------------'
  
   print ' Benchmark Problem: %s' %benchmark_problem
-  print ' Scheme: %s' %str(scheme_option)
+  print ' Scheme: %s' %str(scheme_name)
   print ' Element Type: %s' %str(polynomial_order)
   print ' Gaussian Quadrature (Gauss Points): %s' %str(gausspoints)
   print ' Mesh: %s' %mshFileName
@@ -594,7 +598,6 @@ for t in tqdm(range(1, nt)):
   #---------- Step 3 - Solve the vorticity transport equation ----------------------
   # Taylor Galerkin Scheme
   if scheme_option == 1:
-   scheme_name = 'Taylor Galerkin'
    A = np.copy(M)/dt 
    vorticityRHS = sps.lil_matrix.dot(A,w) - np.multiply(vx,sps.lil_matrix.dot(Gx,w))\
          - np.multiply(vy,sps.lil_matrix.dot(Gy,w))\
@@ -612,8 +615,6 @@ for t in tqdm(range(1, nt)):
  
    # Linear Element   
    if polynomial_option == 1:
-    scheme_name = 'Semi Lagrangian Linear'
- 
     w_d = semiLagrangian.Linear2D(numNodes, neighborsElements, IEN, x, y, vxSL, vySL, dt, w)
  
     A = np.copy(M)/dt
@@ -630,8 +631,6 @@ for t in tqdm(range(1, nt)):
  
    # Mini Element   
    elif polynomial_option == 2:
-    scheme_name = 'Semi Lagrangian Mini'
- 
     w_d = semiLagrangian.Mini2D(numNodes, neighborsElements, IEN, z, r, vz, vr, dt, w)
  
     A = np.copy(Mr)/dt
@@ -648,8 +647,6 @@ for t in tqdm(range(1, nt)):
  
    # Quad Element   
    elif polynomial_option == 3:
-    scheme_name = 'Semi Lagrangian Quad'
- 
     w_d = semiLagrangian.Quad2D(numNodes, neighborsElements, IEN, x, y, vxSL, vySL, dt, w)
  
     A = np.copy(M)/dt
@@ -723,9 +720,9 @@ for t in tqdm(range(1, nt)):
  
  
   # ------------------------ CHECK STEADY STATE ----------------------------------
-  #if np.all(vx == vx_old) and np.all(vy == vy_old):
-  # end_type = 1
-  # break
+  if np.all(vx == vx_old) and np.all(vy == vy_old):
+   end_type = 1
+   break
   # ---------------------------------------------------------------------------------
  
   # ------------------------ CHECK CONVERGENCE RESULT ----------------------------------
