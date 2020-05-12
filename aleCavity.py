@@ -144,8 +144,8 @@ if polynomial_option == 1 or polynomial_option == 2:
   Re = 100.0
   Sc = 1.0
   CFL = 0.5
-  #dt = float(CFL*minLengthMesh)
-  dt = 0.1   #SL 
+  dt = float(CFL*minLengthMesh)
+  #dt = 0.1   #SL 
   #dt = 0.005   #TG
 
 
@@ -331,7 +331,7 @@ psi = psi[0].reshape((len(psi[0]),1))
 
 
 # -------------------------- Import VTK File ------------------------------------
-#numNodes, numElements, IEN, x, y, vx, vy, w, w, psi = importVTK.vtkFile("/home/marquesleandro/aleCavity/libClass/quad499.vtk", polynomial_option)
+numNodes, numElements, IEN, x, y, vx, vy, w, w, psi = importVTK.vtkFile("/home/marquesleandro/aleCavity/results/aleSL_refined3/aleSL_refined3299.vtk", polynomial_option)
 #----------------------------------------------------------------------------------
 
 
@@ -720,9 +720,9 @@ for t in tqdm(range(1, nt)):
  
  
   # ------------------------ CHECK STEADY STATE ----------------------------------
-  if np.all(vx == vx_old) and np.all(vy == vy_old):
-   end_type = 1
-   break
+  #if np.all(vx == vx_old) and np.all(vy == vy_old):
+  # end_type = 1
+  # break
   # ---------------------------------------------------------------------------------
  
   # ------------------------ CHECK CONVERGENCE RESULT ----------------------------------
