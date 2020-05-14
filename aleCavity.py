@@ -147,7 +147,6 @@ if polynomial_option == 1 or polynomial_option == 2:
   dt = float(CFL*minLengthMesh)
   #dt = 0.1   #SL 
   #dt = 0.005   #TG
-  nt = int(10.0/dt)  #10s forced
  
  elif polynomial_option == 2:
   mesh = importMSH.Mini2D(pathMSHFile, mshFileName)
@@ -330,7 +329,7 @@ psi = psi[0].reshape((len(psi[0]),1))
 
 
 # -------------------------- Import VTK File ------------------------------------
-#numNodes, numElements, IEN, x, y, vx, vy, w, w, psi = importVTK.vtkFile("/home/marquesleandro/aleCavity/results/aleSL_refined3/aleSL_refined3299.vtk", polynomial_option)
+numNodes, numElements, IEN, x, y, vx, vy, w, w, psi = importVTK.vtkFile("/home/marquesleandro/aleCavity/results/mesh4/mesh4803.vtk", polynomial_option)
 #----------------------------------------------------------------------------------
 
 
