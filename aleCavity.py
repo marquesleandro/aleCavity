@@ -114,10 +114,11 @@ start_time = time()
 # Linear and Mini Elements
 if polynomial_option == 1 or polynomial_option == 2:
  #mshFileName = 'linearCavity.msh'
- #mshFileName = 'mesh1.msh'
+ #mshFileName = 'cavity.msh'
+ mshFileName = 'mesh1.msh'
  #mshFileName = 'mesh2.msh'
  #mshFileName = 'mesh3.msh'
- mshFileName = 'mesh4.msh'
+ #mshFileName = 'mesh4.msh'
  #mshFileName = 'mesh5.msh'
 
  pathMSHFile = searchMSH.Find(mshFileName)
@@ -147,7 +148,8 @@ if polynomial_option == 1 or polynomial_option == 2:
   dt = float(CFL*minLengthMesh)
   #dt = 0.1   #SL 
   #dt = 0.005   #TG
- 
+  #dt = 0.006   #compare with Luis
+
  elif polynomial_option == 2:
   mesh = importMSH.Mini2D(pathMSHFile, mshFileName)
 
@@ -329,7 +331,7 @@ psi = psi[0].reshape((len(psi[0]),1))
 
 
 # -------------------------- Import VTK File ------------------------------------
-numNodes, numElements, IEN, x, y, vx, vy, w, w, psi = importVTK.vtkFile("/home/marquesleandro/aleCavity/results/mesh4/mesh4803.vtk", polynomial_option)
+#numNodes, numElements, IEN, x, y, vx, vy, w, w, psi = importVTK.vtkFile("/home/marquesleandro/aleCavity/results/mesh4/mesh4803.vtk", polynomial_option)
 #----------------------------------------------------------------------------------
 
 
@@ -437,6 +439,7 @@ for t in tqdm(range(1, nt)):
   # ------------------------- ALE Scheme --------------------------------------------
   xmeshALE_dif = np.linalg.norm(x-x_old)
   ymeshALE_dif = np.linalg.norm(y-y_old)
+
   if not xmeshALE_dif < 5e-3 and not ymeshALE_dif < 5e-3:
    x_old = np.copy(x)
    y_old = np.copy(y)
@@ -552,7 +555,12 @@ for t in tqdm(range(1, nt)):
    print ' time duration: %.1f seconds' %bc_apply_time_solver
    print ""
    # ---------------------------------------------------------------------------------
-   
+  
+  else:
+   vxSL = vx
+   vySL = vy
+    
+ 
    
  
   # ------------------------ SOLVE LINEAR EQUATIONS ----------------------------------
