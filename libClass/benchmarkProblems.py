@@ -80,8 +80,8 @@ class linearCavity:
     _self.dirichletNodes.append(v1)
     _self.dirichletNodes.append(v2)
 
-  _self.aux1BC[3] = _self.wallVelocity # node (0,1) wall velocity forced
-  _self.aux1BC[2] = _self.wallVelocity # node (1,1) wall velocity forced
+  _self.aux1BC[3] = 0.0 # node (0,1) null condition forced
+  _self.aux1BC[2] = 0.0 # node (1,1) null condition forced
   _self.dirichletNodes.append(3)
   _self.dirichletNodes.append(2)
   _self.dirichletNodes = np.unique(_self.dirichletNodes)

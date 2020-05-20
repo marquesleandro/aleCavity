@@ -96,7 +96,8 @@ def Element2D(_simulation_option, _polynomial_option, _GL, _npoints, _nelem, _IE
    polynomial_order = 'Linear Element'
    
    for e in tqdm(range(0, _nelem)):
-    element2D.linear(e)
+    #element2D.linear(e)
+    element2D.analytic(e)
  
     for i in range(0,_GL): 
      ii = _IEN[e][i]

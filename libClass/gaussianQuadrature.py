@@ -1071,7 +1071,7 @@ class Element2D:
 
   A = 0.5*np.linalg.det(np.array([[1, _self.x[i], _self.y[i]],
  				  [1, _self.x[j], _self.y[j]],
-				  [1, _self.x[k], _self.y[k]]]))
+				  [1, _self.x[k], _self.y[k]]], dtype = float))
 
 
   _self.mass = (A/12.)*np.array([[2.,1.,1.],

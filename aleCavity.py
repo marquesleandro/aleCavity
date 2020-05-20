@@ -114,8 +114,8 @@ start_time = time()
 # Linear and Mini Elements
 if polynomial_option == 1 or polynomial_option == 2:
  #mshFileName = 'linearCavity.msh'
- #mshFileName = 'cavity.msh'
- mshFileName = 'mesh1.msh'
+ mshFileName = 'cavity.msh'
+ #mshFileName = 'mesh1.msh'
  #mshFileName = 'mesh2.msh'
  #mshFileName = 'mesh3.msh'
  #mshFileName = 'mesh4.msh'
@@ -145,10 +145,10 @@ if polynomial_option == 1 or polynomial_option == 2:
   Re = 100.0
   Sc = 1.0
   CFL = 0.5
-  dt = float(CFL*minLengthMesh)
+  #dt = float(CFL*minLengthMesh)
   #dt = 0.1   #SL 
   #dt = 0.005   #TG
-  #dt = 0.006   #compare with Luis
+  dt = 0.006   #compare with Luis
 
  elif polynomial_option == 2:
   mesh = importMSH.Mini2D(pathMSHFile, mshFileName)
