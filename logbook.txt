@@ -1,0 +1,30 @@
+ ======================================
+         ALE Cavity logBook 
+ created by Leandro Marques at 05/2020
+ Gesar Search Group - http://www.gesar.uerj.br/en/staff/equipe-gesar.html
+ State University of the Rio de Janeiro
+ e-mail: marquesleandro67@gmail.com
+ ======================================
+
+
+-------------------------------------------------------------------
+05/21/20
+
+-> Create logBook
+-> modified simulatio_option Debug number 
+-> modified input to automate Debug option
+-> created polynomial_option for Analytic Linear Element
+-> created if in Assembly for Analytic Linear Element
+-> compared Horiziontal and Vertical results with Luis and Ghia OK
+
+Simulation Parameters:
+ Scheme: Semi Lagrangian
+ Element Type: Analytic Linear Element
+ Mesh: cavity.msh
+ Time step: 0.006
+ Number of time iteration: 999
+ Reynolds number: 100.0
+ Schmidt number: 1.0
+-------------------------------------------------------------------
+
+ 

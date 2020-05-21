@@ -49,28 +49,11 @@ print ""
 
 
 print ' ----------------------------------------------------------------------------'
+print ' (0) - Debug'
 print ' (1) - Simulation'
-print ' (2) - Debug'
 simulation_option = int(raw_input("\n enter simulation option above: "))
 print' ----------------------------------------------------------------------------\n'
 
-
-print ' ----------------------------------------------------------------------------'
-print ' (1) - Linear Element'
-print ' (2) - Mini Element'
-print ' (3) - Quadratic Element'
-print ' (4) - Cubic Element'
-polynomial_option = int(raw_input("\n Enter polynomial degree option above: "))
-print' ----------------------------------------------------------------------------\n'
-
-
-print ' ----------------------------------------------------------------------------'
-print ' 3 Gauss Points'
-print ' 4 Gauss Points'
-print ' 6 Gauss Points'
-print ' 12 Gauss Points'
-gausspoints = int(raw_input("\n Enter Gauss Points Number option above: "))
-print' ----------------------------------------------------------------------------\n'
 
 
 print ' ----------------------------------------------------------------------------'
@@ -84,12 +67,37 @@ elif scheme_option == 2:
 print' ----------------------------------------------------------------------------\n'
 
 
+
 print ' ----------------------------------------------------------------------------'
-nt = int(raw_input(" Enter number of time interations (nt): "))
+print ' (0) - Analytic Linear Element'
+print ' (1) - Linear Element'
+print ' (2) - Mini Element'
+print ' (3) - Quadratic Element'
+print ' (4) - Cubic Element'
+polynomial_option = int(raw_input("\n Enter polynomial degree option above: "))
 print' ----------------------------------------------------------------------------\n'
 
 
 if simulation_option == 1:
+ if polynomial_option == 0:
+  gausspoints = 3
+
+ else:
+  print ' ----------------------------------------------------------------------------'
+  print ' 3 Gauss Points'
+  print ' 4 Gauss Points'
+  print ' 6 Gauss Points'
+  print ' 12 Gauss Points'
+  gausspoints = int(raw_input("\n Enter Gauss Points Number option above: "))
+  print' ----------------------------------------------------------------------------\n'
+
+
+ 
+ print ' ----------------------------------------------------------------------------'
+ nt = int(raw_input(" Enter number of time interations (nt): "))
+ print' ----------------------------------------------------------------------------\n'
+ 
+ 
  print ' ----------------------------------------------------------------------------'
  folderResults = raw_input(" Enter folder name to save simulations: ")
  print' ----------------------------------------------------------------------------\n'
@@ -99,7 +107,9 @@ if simulation_option == 1:
  print' ----------------------------------------------------------------------------\n'
 
 
-elif simulation_option == 2:
+elif simulation_option == 0:
+ gausspoints = 3
+ nt = 2
  folderResults  = 'deletar'
  observation = 'debug'
 
@@ -112,7 +122,7 @@ print ' ------------'
 start_time = time()
 
 # Linear and Mini Elements
-if polynomial_option == 1 or polynomial_option == 2:
+if polynomial_option == 0 or polynomial_option == 1 or polynomial_option == 2:
  #mshFileName = 'linearCavity.msh'
  mshFileName = 'cavity.msh'
  #mshFileName = 'mesh1.msh'
@@ -125,7 +135,7 @@ if polynomial_option == 1 or polynomial_option == 2:
  if pathMSHFile == 'File not found':
   sys.exit()
 
- if polynomial_option == 1:
+ if polynomial_option == 0 or polynomial_option == 1:
   mesh = importMSH.Linear2D(pathMSHFile, mshFileName)
 
   numNodes               = mesh.numNodes
@@ -253,7 +263,7 @@ start_time = time()
 # ------------------------ Boundaries Conditions ----------------------------------
 
 # Linear and Mini Elements
-if polynomial_option == 1 or polynomial_option == 2:
+if polynomial_option == 0 or polynomial_option == 1 or polynomial_option == 2:
 
  # Applying vx condition
  xVelocityLHS0 = sps.lil_matrix.copy(M)
@@ -378,7 +388,7 @@ os.chdir(initial_path)
 
 # ------------------------ Export VTK File ---------------------------------------
 # Linear and Mini Elements
-if polynomial_option == 1 or polynomial_option == 2:   
+if polynomial_option == 0 or polynomial_option == 1 or polynomial_option == 2:   
  save = exportVTK.Linear2D(x,y,IEN,numNodes,numElements,w,w,psi,vx,vy)
  save.create_dir(folderResults)
  save.saveVTK(folderResults + str(0))
@@ -504,7 +514,7 @@ for t in tqdm(range(1, nt)):
    start_time = time()
   
    # Linear and Mini Elements
-   if polynomial_option == 1 or polynomial_option == 2:
+   if polynomial_option == 0 or polynomial_option == 1 or polynomial_option == 2:
  
     # Applying vx condition
     xVelocityLHS0 = sps.lil_matrix.copy(M)
@@ -620,7 +630,7 @@ for t in tqdm(range(1, nt)):
   elif scheme_option == 2:
  
    # Linear Element   
-   if polynomial_option == 1:
+   if polynomial_option == 0 or polynomial_option == 1:
     w_d = semiLagrangian.Linear2D(numNodes, neighborsElements, IEN, x, y, vxSL, vySL, dt, w)
  
     A = np.copy(M)/dt
@@ -710,7 +720,7 @@ for t in tqdm(range(1, nt)):
  
   # ------------------------ Export VTK File ---------------------------------------
   # Linear and Mini Elements
-  if polynomial_option == 1 or polynomial_option == 2:   
+  if polynomial_option == 0 or polynomial_option == 1 or polynomial_option == 2:   
    save = exportVTK.Linear2D(x,y,IEN,numNodes,numElements,w,w,psi,vx,vy)
    save.create_dir(folderResults)
    save.saveVTK(folderResults + str(t))

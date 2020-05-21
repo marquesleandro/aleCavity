@@ -96,8 +96,7 @@ def Element2D(_simulation_option, _polynomial_option, _GL, _npoints, _nelem, _IE
    polynomial_order = 'Linear Element'
    
    for e in tqdm(range(0, _nelem)):
-    #element2D.linear(e)
-    element2D.analytic(e)
+    element2D.linear(e)
  
     for i in range(0,_GL): 
      ii = _IEN[e][i]
@@ -189,7 +188,31 @@ def Element2D(_simulation_option, _polynomial_option, _GL, _npoints, _nelem, _IE
  
       Gx[ii,jj] += element2D.gx[i][j]
       Gy[ii,jj] += element2D.gy[i][j]
+
  
+  elif _polynomial_option == 0:
+   polynomial_order = 'Analytic Linear Element'
+   
+   for e in tqdm(range(0, _nelem)):
+    element2D.analytic(e)
+ 
+    for i in range(0,_GL): 
+     ii = _IEN[e][i]
+   
+     for j in range(0,_GL):
+      jj = _IEN[e][j]
+ 
+      Kxx[ii,jj] += element2D.kxx[i][j]
+      Kxy[ii,jj] += element2D.kxy[i][j]
+      Kyx[ii,jj] += element2D.kyx[i][j]
+      Kyy[ii,jj] += element2D.kyy[i][j]
+      K[ii,jj] += element2D.kxx[i][j] + element2D.kyy[i][j]
+    
+      M[ii,jj] += element2D.mass[i][j]
+      MLump[ii,ii] += element2D.mass[i][j]
+ 
+      Gx[ii,jj] += element2D.gx[i][j]
+      Gy[ii,jj] += element2D.gy[i][j]
  
  
   else:
@@ -200,7 +223,7 @@ def Element2D(_simulation_option, _polynomial_option, _GL, _npoints, _nelem, _IE
 
 
  #Debug
- elif _simulation_option == 2:
+ elif _simulation_option == 0:
   polynomial_order = 'Debug'
 
   Kxx = Kxx*1.0 
