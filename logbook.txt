@@ -10,6 +10,60 @@
 -------------------------------------------------------------------
 05/21/20
 
+-> simulations for relative error analysis using analytic linear element
+   all simulations was used ALE = 0.5
+   nt = 10.0/dt -> 10s forced
+
+-> mesh4 and mesh5 will be simulated in cluster
+
+
+
+mesh1 Parameters:
+ Scheme: Semi Lagrangian
+ Element Type: Analytic Linear Element
+ Gaussian Quadrature (Gauss Points): 3
+ Mesh: mesh1.msh
+ Number of nodes: 142
+ Number of elements: 242
+ Smallest edge length: 0.072570
+ Time step: 0.0362851257348
+ Number of time iteration: 274 
+ Reynolds number: 100.0
+ Schmidt number: 1.0
+
+
+mesh 2 Parameters:
+ Scheme: Semi Lagrangian
+ Element Type: Analytic Linear Element
+ Gaussian Quadrature (Gauss Points): 3
+ Mesh: mesh2.msh
+ Number of nodes: 525
+ Number of elements: 968
+ Smallest edge length: 0.036285
+ Time step: 0.0181425628674
+ Number of time iteration: 550 
+ Reynolds number: 100.0
+ Schmidt number: 1.0
+
+
+mesh3 Parameters:
+ Scheme: Semi Lagrangian
+ Element Type: Analytic Linear Element
+ Gaussian Quadrature (Gauss Points): 3
+ Mesh: mesh3.msh
+ Number of nodes: 2017
+ Number of elements: 3872
+ Smallest edge length: 0.018143
+ Time step: 0.00907128143369
+ Number of time iteration: 1101 
+ Reynolds number: 100.0
+ Schmidt number: 1.0
+-------------------------------------------------------------------
+
+
+-------------------------------------------------------------------
+05/21/20
+
 -> Create logBook
 -> modified simulatio_option Debug number 
 -> modified input to automate Debug option
