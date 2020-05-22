@@ -7,6 +7,32 @@
  ======================================
 
 
+
+-------------------------------------------------------------------
+05/22/20
+
+-> mesh4 final result OK
+-> mesh5 simulating yet
+
+ all simulations was used ALE = 0.5
+ nt = 10.0/dt -> 10s forced
+
+mesh4 Parameters:
+ Scheme: Semi Lagrangian
+ Element Type: Analytic Linear Element
+ Gaussian Quadrature (Gauss Points): 3
+ Mesh: mesh4.msh
+ Number of nodes: 7905
+ Number of elements: 15488
+ Smallest edge length: 0.009071
+ Time step: 0.002
+ Number of time iteration: 4999
+ Reynolds number: 100.0
+ Schmidt number: 1.0
+-------------------------------------------------------------------
+
+
+
 -------------------------------------------------------------------
 05/21/20
 
