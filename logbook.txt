@@ -8,6 +8,34 @@
 
 
 
+
+-------------------------------------------------------------------
+05/24/20
+-> renamed all mesh: 
+mesh5 --> mesh6
+mesh4 --> mesh5
+mesh3 --> mesh4
+mesh2 --> mesh3
+mesh1 --> mesh2
+
+-> created mesh1 with 68 elements
+
+new mesh1 Paramenters:
+ Scheme: Semi Lagrangian
+ Element Type: Analytic Linear Element
+ Gaussian Quadrature (Gauss Points): 3
+ Mesh: mesh6.msh
+ Number of nodes: 45
+ Number of elements: 68
+ Smallest edge length: 0.139089
+ Time step: 0.0695446171216
+ Number of time iteration: 142
+ Reynolds number: 100.0
+ Schmidt number: 1.0
+-------------------------------------------------------------------
+
+
+
 -------------------------------------------------------------------
 05/22/20
 

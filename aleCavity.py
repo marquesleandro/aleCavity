@@ -128,8 +128,9 @@ if polynomial_option == 0 or polynomial_option == 1 or polynomial_option == 2:
  #mshFileName = 'mesh1.msh'
  #mshFileName = 'mesh2.msh'
  #mshFileName = 'mesh3.msh'
- mshFileName = 'mesh4.msh'
+ #mshFileName = 'mesh4.msh'
  #mshFileName = 'mesh5.msh'
+ mshFileName = 'mesh6.msh'
 
  pathMSHFile = searchMSH.Find(mshFileName)
  if pathMSHFile == 'File not found':
@@ -155,11 +156,11 @@ if polynomial_option == 0 or polynomial_option == 1 or polynomial_option == 2:
   Re = 100.0
   Sc = 1.0
   CFL = 0.5
-  #dt = float(CFL*minLengthMesh)
+  dt = float(CFL*minLengthMesh)
   #dt = 0.1   #SL 
   #dt = 0.005   #TG
   #dt = 0.006   #compare with Luis
-  dt = 0.002   #simulation mesh4
+  #dt = 0.002   #simulation mesh4
   #dt = 0.001   #simulation mesh5
   nt = int(10.0/dt) #10s forced
 
