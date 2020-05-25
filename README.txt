@@ -8,6 +8,19 @@
 
 
 
+-------------------------------------------------------------------
+05/25/20
+-> simulating in cluster cavity.msh
+
+
+a) this simulation is final result to add in article
+
+b) possibly, will not be placed mesh convergence analysis in article 
+for ALE Cavity, because we there is no analytical solution
+-------------------------------------------------------------------
+
+
+
 
 -------------------------------------------------------------------
 05/24/20
