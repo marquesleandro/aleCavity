@@ -11,6 +11,27 @@
 
 -------------------------------------------------------------------
 05/25/20
+-> simulation cavity.msh OK. Excelent result
+
+cavity.msh Parameters:
+ Scheme: Semi Lagrangian
+ Element Type: Analytic Linear Element
+ Gaussian Quadrature (Gauss Points): 3
+ Mesh: cavity.msh
+ Number of nodes: 3798
+ Number of elements: 7382
+ Smallest edge length: 0.010963
+ Time step: 0.002
+ Number of time iteration: 4999
+ Reynolds number: 100.0
+ Schmidt number: 1.0
+-------------------------------------------------------------------
+
+
+
+
+-------------------------------------------------------------------
+05/25/20
 -> simulating in cluster cavity.msh
 
 
