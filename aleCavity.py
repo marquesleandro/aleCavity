@@ -153,7 +153,7 @@ if polynomial_option == 0 or polynomial_option == 1 or polynomial_option == 2:
   FreedomDegree          = mesh.FreedomDegree
   numPhysical            = mesh.numPhysical 
 
-  Re = 100.0
+  Re = 10.0
   Sc = 1.0
   CFL = 0.5
   #dt = float(CFL*minLengthMesh)
