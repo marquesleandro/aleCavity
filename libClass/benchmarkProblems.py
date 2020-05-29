@@ -80,10 +80,6 @@ class linearCavity:
     _self.dirichletNodes.append(v1)
     _self.dirichletNodes.append(v2)
 
-  _self.aux1BC[3] = 0.0 # node (0,1) null condition forced
-  _self.aux1BC[2] = 0.0 # node (1,1) null condition forced
-  _self.dirichletNodes.append(3)
-  _self.dirichletNodes.append(2)
   _self.dirichletNodes = np.unique(_self.dirichletNodes)
 
 
@@ -208,4 +204,33 @@ class linearCavity:
    _self.dirichletVector[mm] = _self.aux1BC[mm]
    _self.aux2BC[mm] = 0.0
  
+
+
+ def pressureCondition(_self, _boundaryEdges, _LHS0, _neighborsNodes):
+  _self.dirichletVector = np.zeros([_self.numNodes,1], dtype = float) 
+  _self.dirichletNodes = [] 
+  _self.aux1BC = np.zeros([_self.numNodes,1], dtype = float) #For scipy array solve
+  _self.aux2BC = np.ones([_self.numNodes,1], dtype = float) 
+  _self.LHS = sps.csr_matrix.copy(_LHS0) #used csr matrix because LHS = lil_matrix + lil_matrix
+  _self.boundaryEdges = _boundaryEdges
+  _self.neighborsNodes = _neighborsNodes
+
+  # Dirichlet condition
+  _self.aux1BC[0] = 0.0 # node (0,0) null pressure
+  _self.dirichletNodes.append(0)
+  _self.dirichletNodes = np.unique(_self.dirichletNodes)
+
+  # Gaussian elimination for pressure
+  for mm in _self.dirichletNodes:
+   for nn in _self.neighborsNodes[mm]:
+    _self.dirichletVector[nn] -= float(_self.LHS[nn,mm]*_self.aux1BC[mm])
+    _self.LHS[nn,mm] = 0.0
+    _self.LHS[mm,nn] = 0.0
+   
+   _self.LHS[mm,mm] = 1.0
+   _self.dirichletVector[mm] = _self.aux1BC[mm]
+   _self.aux2BC[mm] = 0.0
+ 
+
+
 

@@ -275,11 +275,16 @@ if polynomial_option == 0 or polynomial_option == 1 or polynomial_option == 2:
  xVelocityBC.xVelocityCondition(boundaryEdges,xVelocityLHS0,neighborsNodes)
  benchmark_problem = xVelocityBC.benchmark_problem
 
- # Applying vr condition
+ # Applying vy condition
  yVelocityLHS0 = sps.lil_matrix.copy(M)
  yVelocityBC = benchmarkProblems.linearCavity(numPhysical,numNodes,x,y)
  yVelocityBC.yVelocityCondition(boundaryEdges,yVelocityLHS0,neighborsNodes)
- 
+
+ # Applying pressure condition
+ pressureLHS0 = - sps.lil_matrix.copy(Kxx) - sps.lil_matrix.copy(Kyy)
+ pressureBC = benchmarkProblems.linearCavity(numPhysical,numNodes,x,y)
+ pressureBC.pressureCondition(boundaryEdges,pressureLHS0,neighborsNodes)
+
  # Applying psi condition
  streamFunctionLHS0 = sps.lil_matrix.copy(Kxx) + sps.lil_matrix.copy(Kyy)
  streamFunctionBC = benchmarkProblems.linearCavity(numPhysical,numNodes,x,y)
@@ -318,6 +323,7 @@ elif polynomial_option == 3:
 # -------------------------- Initial condition ------------------------------------
 vx = np.copy(xVelocityBC.aux1BC)
 vy = np.copy(yVelocityBC.aux1BC)
+p = np.copy(pressureBC.aux1BC)
 psi = np.copy(streamFunctionBC.aux1BC)
 w = np.zeros([numNodes,1], dtype = float)
 # ---------------------------------------------------------------------------------
@@ -530,6 +536,11 @@ for t in tqdm(range(1, nt)):
     yVelocityLHS0 = sps.lil_matrix.copy(M)
     yVelocityBC = benchmarkProblems.linearCavity(numPhysical,numNodes,x,y)
     yVelocityBC.yVelocityCondition(boundaryEdges,yVelocityLHS0,neighborsNodes)
+
+    # Applying pressure condition
+    pressureLHS0 = - sps.lil_matrix.copy(Kxx) - sps.lil_matrix.copy(Kyy)
+    pressureBC = benchmarkProblems.linearCavity(numPhysical,numNodes,x,y)
+    pressureBC.pressureCondition(boundaryEdges,streamFunctionLHS0,neighborsNodes)
     
     # Applying psi condition
     streamFunctionLHS0 = sps.lil_matrix.copy(Kxx) + sps.lil_matrix.copy(Kyy)
@@ -616,6 +627,7 @@ for t in tqdm(range(1, nt)):
  
  
   #---------- Step 3 - Solve the vorticity transport equation ----------------------
+  w_old = np.copy(w)
   # Taylor Galerkin Scheme
   if scheme_option == 1:
    A = np.copy(M)/dt 
@@ -685,6 +697,7 @@ for t in tqdm(range(1, nt)):
   #---------- Step 4 - Solve the streamline equation --------------------------------
   # Solve Streamline
   # psi condition
+  psi_old = np.copy(psi)
   streamFunctionRHS = sps.lil_matrix.dot(M,w)
   streamFunctionRHS = np.multiply(streamFunctionRHS,streamFunctionBC.aux2BC)
   streamFunctionRHS = streamFunctionRHS + streamFunctionBC.dirichletVector
@@ -711,7 +724,21 @@ for t in tqdm(range(1, nt)):
   vy = scipy.sparse.linalg.cg(yVelocityBC.LHS,yVelocityRHS,vy, maxiter=1.0e+05, tol=1.0e-05)
   vy = vy[0].reshape((len(vy[0]),1))
   #----------------------------------------------------------------------------------
+
+
+
+  #---------- Step 6 - Compute the pressure field -----------------------------------
+  # Pressure
+  p_old = np.copy(p)
+  pressureRHS =   2.0*(sps.lil_matrix.dot(Kxx,psi)*sps.lil_matrix.dot(Kyy,psi)\
+                     - sps.lil_matrix.dot(Kxy,psi)**2)
+  pressureRHS = np.multiply(pressureRHS,pressureBC.aux2BC)
+  pressureRHS = pressureRHS + pressureBC.dirichletVector
+  p = scipy.sparse.linalg.cg(pressureBC.LHS,pressureRHS,p, maxiter=1.0e+05, tol=1.0e-05)
+  p = p[0].reshape((len(p[0]),1))
+  #----------------------------------------------------------------------------------
  
+
   end_solver_time = time()
   solver_time = end_solver_time - start_solver_time
   print ' time duration: %.1f seconds' %solver_time
@@ -725,13 +752,13 @@ for t in tqdm(range(1, nt)):
   # ------------------------ Export VTK File ---------------------------------------
   # Linear and Mini Elements
   if polynomial_option == 0 or polynomial_option == 1 or polynomial_option == 2:   
-   save = exportVTK.Linear2D(x,y,IEN,numNodes,numElements,w,w,psi,vx,vy)
+   save = exportVTK.Linear2D(x,y,IEN,numNodes,numElements,w,psi,p,vx,vy)
    save.create_dir(folderResults)
    save.saveVTK(folderResults + str(t))
  
   # Quad Element
   elif polynomial_option == 3:   
-   save = exportVTK.Quad2D(x,y,IEN,numNodes,numElements,w,w,psi,vx,vy)
+   save = exportVTK.Quad2D(x,y,IEN,numNodes,numElements,w,psi,p,vx,vy)
    save.create_dir(folderResults)
    save.saveVTK(folderResults + str(t))
   # ---------------------------------------------------------------------------------
@@ -740,7 +767,7 @@ for t in tqdm(range(1, nt)):
  
  
   # ------------------------ CHECK STEADY STATE ----------------------------------
-  #if np.all(vx == vx_old) and np.all(vy == vy_old):
+  #if np.all(vx == vx_old) and np.all(vy == vy_old) and np.all(p == p_old) and np.all(psi == p_old) and np.all(w == w_old):
   # end_type = 1
   # break
   # ---------------------------------------------------------------------------------
