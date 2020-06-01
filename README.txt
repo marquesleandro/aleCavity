@@ -8,6 +8,76 @@
  ===================================================
 
 
+-------------------------------------------------------------------
+06/01/20
+-> good result for 10Re and 100Re simulations.
+-> bad result for 400Re and 1000Re simulations.
+
+
+Re=10 Parameters
+ Benchmark Problem: linear Cavity
+ Scheme: Semi Lagrangian
+ Element Type: Analytic Linear Element
+ Gaussian Quadrature (Gauss Points): 3
+ Mesh: cavity.msh
+ Number of nodes: 3798
+ Number of elements: 7382
+ Smallest edge length: 0.010963
+ Time step: 0.002
+ Number of time iteration: 4999
+ Reynolds number: 10.0
+ Schmidt number: 1.0
+
+
+Re=100 Parameters
+ Benchmark Problem: linear Cavity
+ Scheme: Semi Lagrangian
+ Element Type: Analytic Linear Element
+ Gaussian Quadrature (Gauss Points): 3
+ Mesh: cavity.msh
+ Number of nodes: 3798
+ Number of elements: 7382
+ Smallest edge length: 0.010963
+ Time step: 0.002
+ Number of time iteration: 4999
+ Reynolds number: 100.0
+ Schmidt number: 1.0
+
+
+Re=400 Parameters
+ Benchmark Problem: linear Cavity
+ Scheme: Semi Lagrangian
+ Element Type: Analytic Linear Element
+ Gaussian Quadrature (Gauss Points): 3
+ Mesh: cavity.msh
+ Number of nodes: 3798
+ Number of elements: 7382
+ Smallest edge length: 0.010963
+ Time step: 0.001
+ Number of time iteration: 9999
+ Reynolds number: 400.0
+ Schmidt number: 1.0
+
+
+Re=1000 Parameters
+ Benchmark Problem: linear Cavity
+ Scheme: Semi Lagrangian
+ Element Type: Analytic Linear Element
+ Gaussian Quadrature (Gauss Points): 3
+ Mesh: cavity.msh
+ Number of nodes: 3798
+ Number of elements: 7382
+ Smallest edge length: 0.010963
+ Time step: 0.0005
+ Number of time iteration: 19999
+ Reynolds number: 1000.0
+ Schmidt number: 1.0
+------------------------------------------------------------------
+
+
+
+
+
 
 -------------------------------------------------------------------
 05/27/20
