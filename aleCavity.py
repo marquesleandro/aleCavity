@@ -351,7 +351,7 @@ psi = psi[0].reshape((len(psi[0]),1))
 
 
 # -------------------------- Import VTK File ------------------------------------
-#numNodes, numElements, IEN, x, y, vx, vy, w, w, psi = importVTK.vtkFile("/home/marquesleandro/aleCavity/results/mesh4/mesh4803.vtk", polynomial_option)
+numNodes, numElements, IEN, x, y, vx, vy, w, w, psi = importVTK.vtkFile("/home/marquesleandro/aleCavity/profileResultsData/400Re9999.vtk", polynomial_option)
 #----------------------------------------------------------------------------------
 
 

@@ -1,0 +1,53 @@
+                                 COPYRIGHT                                 
+ ========================================================================== 
+ This relatory was created by Leandro Marques at 2020-07-19 09:46:06.495168
+ e-mail: marquesleandro67@gmail.com 
+ Gesar Search Group 
+ State University of the Rio de Janeiro 
+ ========================================================================== 
+
+
+ Simulator Name: aleCavity.py
+ Benchmark Problem: linear Cavity
+ Scheme: Semi Lagrangian
+ Element Type: Debug
+ Gaussian Quadrature (Gauss Points): 3
+
+ ------------------------- 
+ PARAMETERS OF SIMULATION: 
+ ------------------------- 
+ Mesh: cavity.msh
+ Number of nodes: 3798
+ Number of elements: 7382
+ Smallest edge length: 0.0109632
+ Time step: 0.002
+ Number of time iteration: 1
+ Reynolds number: 10.0
+ Schmidt number: 1.0
+
+
+ ------------ 
+ IMPORT MESH: 
+ ------------ 
+ time duration: 0.321 seconds
+
+ --------- 
+ ASSEMBLY: 
+ --------- 
+ time duration: 0.294 seconds
+
+ -------------------------------- 
+ INITIAL AND BOUNDARY CONDITIONS: 
+ -------------------------------- 
+ time duration: 1.029 seconds
+
+ ---------------------------- 
+ SOLVE THE LINEARS EQUATIONS: 
+ ---------------------------- 
+ time duration: 2.344 seconds
+
+ ------------ 
+ OBSERVATION: 
+ ------------ 
+debug
+

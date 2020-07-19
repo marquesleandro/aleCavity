@@ -36,7 +36,7 @@ def vtkFile(_file, _polynomial_option):
     numElements = int(vtkList[i][j+1])
 
     # Linear Element
-    if _polynomial_option == 1:
+    if _polynomial_option == 0 or _polynomial_option == 1:
      IEN = np.zeros([numElements,3], dtype = int)
      for e in range(0,numElements):
       IEN[e][0] = int(vtkList[i+e+1][1])
